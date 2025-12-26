@@ -213,7 +213,7 @@ body {
 }
 
 .section-header { text-align: center; margin-bottom: 60px; }
-.news-section h2 { font-size: 3rem; color: #fff; margin-top: 10px; }
+.news-section h2 { font-size: 3rem; color: #fff; margin-top: 10px; font-family: 'Orbitron', sans-serif; letter-spacing: 2px; }
 .eyebrow { color: #4facfe; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
 
 .news-grid {
@@ -429,13 +429,11 @@ body {
     flex-direction: column;
     gap: 20px;
     backdrop-filter: blur(10px);
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .crew-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(79, 172, 254, 0.3);
-    background: rgba(255,255,255,0.05);
 }
 
 .crew-header { display: flex; align-items: center; gap: 20px; }
@@ -447,38 +445,83 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #4facfe;
+    border: 2px solid #555; /* Default fallback */
     font-size: 1.5rem;
-    color: #4facfe;
+    color: #fff;
     flex-shrink: 0;
 }
 
 .crew-title-box h3 { margin: 0; font-size: 1.5rem; }
 
-/* Link Styles for Names */
+/* Link Styles */
 .crew-name-link {
     text-decoration: none;
     color: inherit;
     transition: opacity 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
 }
-
-.crew-name-link:hover { opacity: 0.8; text-decoration: none; }
+.crew-name-link:hover { opacity: 0.8; }
 
 .crew-role { color: #94a3b8; font-size: 0.9rem; letter-spacing: 1px; }
 .crew-bio { color: #cbd5e1; line-height: 1.6; font-size: 0.95rem; flex-grow: 1; }
 
 .crew-stats { display: flex; flex-wrap: wrap; gap: 10px; margin-top: auto; }
 .stat-box { 
-    background: rgba(79, 172, 254, 0.1); 
+    background: rgba(255, 255, 255, 0.05); 
     padding: 8px 12px; 
     border-radius: 4px; 
     font-size: 0.8rem; 
-    border-left: 2px solid #4facfe;
+    border-left: 2px solid #555;
     flex: 1 1 40%; 
 }
+
+/* --- UNIQUE MEMBER THEMES --- */
+
+/* 1. Tanveer: GOLD / AMBER */
+.member-tanveer {
+    border-color: rgba(255, 215, 0, 0.3);
+}
+.member-tanveer:hover {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.15);
+    border-color: #ffd700;
+}
+.member-tanveer .crew-img-placeholder {
+    border-color: #ffd700;
+    color: #ffd700;
+    background: rgba(255, 215, 0, 0.05);
+}
+.member-tanveer .stat-box { border-left-color: #ffd700; }
+
+
+/* 2. Krishna: VIOLET / PURPLE (Creative/UI) */
+.member-krishna {
+    border-color: rgba(168, 85, 247, 0.3);
+}
+.member-krishna:hover {
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+    border-color: #a855f7;
+}
+.member-krishna .crew-img-placeholder {
+    border-color: #a855f7;
+    color: #a855f7;
+    background: rgba(168, 85, 247, 0.05);
+}
+.member-krishna .stat-box { border-left-color: #a855f7; }
+
+
+/* 3. Sarthak: RED / CRIMSON (AI/Tech) */
+.member-sarthak {
+    border-color: rgba(255, 71, 87, 0.3);
+}
+.member-sarthak:hover {
+    box-shadow: 0 0 20px rgba(255, 71, 87, 0.15);
+    border-color: #ff4757;
+}
+.member-sarthak .crew-img-placeholder {
+    border-color: #ff4757;
+    color: #ff4757;
+    background: rgba(255, 71, 87, 0.05);
+}
+.member-sarthak .stat-box { border-left-color: #ff4757; }
 
 /* --- CHATBOT WIDGET STYLES --- */
 .chat-widget {

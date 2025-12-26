@@ -208,7 +208,7 @@ async function sendMessage() {
         if (lower.includes('hello') || lower.includes('hi')) reply = "Greetings, Commander. (Simulation Mode)";
         else if (lower.includes('status')) reply = "All systems operational. (Simulation Mode)";
         else if (lower.includes('launch')) reply = "Next launch data is visible in the Flight Schedule terminal.";
-        else if (lower.includes('crew')) reply = "Active crew: Tanveer S. Saini & Sarthak Mehta.";
+        else if (lower.includes('crew')) reply = "Command Crew: Tanveer S. Saini, Krishna Vig, and Sarthak Mehta.";
         else if (lower.includes('who are you')) reply = "I am AETHER, the onboard mission control interface.";
         
         document.getElementById(loadingId).innerText = reply;
