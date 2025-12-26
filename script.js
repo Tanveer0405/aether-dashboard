@@ -41,7 +41,7 @@ function animateStars() {
     requestAnimationFrame(animateStars);
 }
 
-// --- REAL-TIME CLOCKS (PRACTICAL DASHBOARD) ---
+// --- REAL-TIME CLOCKS ---
 function updateClocks() {
     const now = new Date();
     
@@ -56,18 +56,18 @@ function updateClocks() {
 setInterval(updateClocks, 1000);
 updateClocks();
 
-// --- LAUNCH COUNTDOWN (FIXED: NOW GUARANTEES FUTURE LAUNCH) ---
+// --- LAUNCH COUNTDOWN ---
 async function loadNextLaunch() {
     const providerElem = document.getElementById('launch-provider');
     const missionElem = document.getElementById('launch-mission');
     const padElem = document.getElementById('launch-pad');
     
     try {
-        // 1. Fetch upcoming launches (Getting 5 to be safe)
+        // Fetch upcoming launches
         const response = await fetch('https://lldev.thespacedevs.com/2.2.0/launch/upcoming/?limit=5');
         const data = await response.json();
         
-        // 2. Filter to find the first one that is actually in the future
+        // Filter to find future launch
         const now = new Date();
         const nextLaunch = data.results.find(launch => new Date(launch.net) > now);
 
@@ -80,13 +80,12 @@ async function loadNextLaunch() {
             throw new Error("No future launches found");
         }
     } catch (error) {
-        // 3. FALLBACK SIMULATION (So it never shows 0)
+        // Fallback Simulation
         console.log("API unavailable, starting simulation.");
         providerElem.innerText = "SIMULATION MODE";
         missionElem.innerText = "ORBITAL INTERCEPT TEST";
         padElem.innerText = "Vandenberg SFB, CA";
         
-        // Set fake date 2 days from now
         const fakeDate = new Date();
         fakeDate.setDate(fakeDate.getDate() + 2);
         startCountdown(fakeDate);
@@ -98,7 +97,6 @@ function startCountdown(launchDate) {
         const now = new Date();
         const diff = launchDate - now;
 
-        // If for some reason we hit 0, reload to find next launch
         if (diff <= 0) {
             loadNextLaunch(); 
             return;
@@ -146,6 +144,74 @@ async function loadSpaceNews() {
         });
     } catch (error) {
         container.innerHTML = '<p style="color:red; text-align:center;">⚠ Data Uplink Offline.</p>';
+    }
+}
+
+// --- CHATBOT INTELLIGENCE (LIVE MODE) ---
+function toggleChat() {
+    const body = document.getElementById('chat-body');
+    if (body.style.display === 'flex') {
+        body.style.display = 'none';
+    } else {
+        body.style.display = 'flex';
+    }
+}
+
+function handleInput(event) {
+    if (event.key === 'Enter') sendMessage();
+}
+
+async function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const output = document.getElementById('chat-output');
+    const text = input.value.trim();
+
+    if (!text) return;
+
+    // 1. Show User Message
+    output.innerHTML += `<div class="user-msg">${text}</div>`;
+    input.value = "";
+    output.scrollTop = output.scrollHeight;
+
+    // 2. Show "Thinking..."
+    const loadingId = "loading-" + Date.now();
+    output.innerHTML += `<div class="bot-msg" id="${loadingId}">...Computing...</div>`;
+    output.scrollTop = output.scrollHeight;
+
+    // 3. TRY CONNECTING TO BACKEND
+    try {
+        // --- UPDATED LIVE URL ---
+        const backendURL = 'https://aether-api-7kpl.onrender.com/chat'; 
+        
+        // We set a slightly longer timeout for the free tier (it might sleep)
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 10000); // Increased to 10s for wake-up
+
+        const response = await fetch(backendURL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text }),
+            signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+
+        const data = await response.json();
+        document.getElementById(loadingId).innerText = data.reply;
+
+    } catch (error) {
+        // 4. FALLBACK: SIMULATION MODE (If connection fails or times out)
+        console.log("Backend connection failed:", error);
+        
+        let reply = "⚠ Uplink Unstable. Switching to Local Simulation.";
+        const lower = text.toLowerCase();
+        
+        if (lower.includes('hello') || lower.includes('hi')) reply = "Greetings, Commander. (Simulation Mode)";
+        else if (lower.includes('status')) reply = "All systems operational. (Simulation Mode)";
+        else if (lower.includes('launch')) reply = "Next launch data is visible in the Flight Schedule terminal.";
+        else if (lower.includes('crew')) reply = "Active crew: Tanveer S. Saini & Sarthak Mehta.";
+        else if (lower.includes('who are you')) reply = "I am AETHER, the onboard mission control interface.";
+        
+        document.getElementById(loadingId).innerText = reply;
     }
 }
 

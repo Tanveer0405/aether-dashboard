@@ -71,7 +71,8 @@
                     </div>
                     <div class="telemetry-item">
                         <span class="tele-label">COORDINATES</span>
-                        <span class="tele-value" style="font-size: 1rem;">31.63° N, 74.87° E</span> </div>
+                        <span class="tele-value" style="font-size: 1rem;">31.63° N, 74.87° E</span>
+                    </div>
                     <div class="telemetry-item">
                         <span class="tele-label">STATION STATUS</span>
                         <span class="tele-value status-ok">ONLINE</span>
@@ -179,6 +180,46 @@
                     <span class="archive-title">Indian Astronaut on ISS</span>
                     <span class="archive-desc">Group Captain Shubhanshu Shukla boards the ISS via Axiom-4, conducting vital experiments for the Gaganyaan program.</span>
                 </div>
+                <div class="archive-item">
+                    <div class="archive-header">
+                        <span class="date-badge">JUL 30</span>
+                        <i class="fa-solid fa-plane-arrival archive-icon"></i>
+                    </div>
+                    <span class="archive-title">ISRO NISAR Launch</span>
+                    <span class="archive-desc">Joint NASA-ISRO Synthetic Aperture Radar (NISAR) mission launches to monitor Earth's changing ecosystems and ice masses.</span>
+                </div>
+                <div class="archive-item">
+                    <div class="archive-header">
+                        <span class="date-badge">AUG 31</span>
+                        <i class="fa-solid fa-moon archive-icon"></i>
+                    </div>
+                    <span class="archive-title">Juice Venus Flyby</span>
+                    <span class="archive-desc">ESA's Jupiter Icy Moons Explorer (Juice) successfully completes a gravity assist maneuver at Venus.</span>
+                </div>
+                <div class="archive-item">
+                    <div class="archive-header">
+                        <span class="date-badge">SEP 15</span>
+                        <i class="fa-solid fa-shuttle-space archive-icon"></i>
+                    </div>
+                    <span class="archive-title">New Glenn Maiden Flight</span>
+                    <span class="archive-desc">Blue Origin's heavy-lift rocket completes its first successful orbital mission, deploying Project Kuiper test satellites.</span>
+                </div>
+                <div class="archive-item">
+                    <div class="archive-header">
+                        <span class="date-badge">OCT 04</span>
+                        <i class="fa-solid fa-robot archive-icon"></i>
+                    </div>
+                    <span class="archive-title">Tianwen-2 Comet Mission</span>
+                    <span class="archive-desc">China launches the Tianwen-2 probe to collect samples from near-Earth asteroid 2016 HO3 and explore a main-belt comet.</span>
+                </div>
+                <div class="archive-item">
+                    <div class="archive-header">
+                        <span class="date-badge">NOV 19</span>
+                        <i class="fa-solid fa-gas-pump archive-icon"></i>
+                    </div>
+                    <span class="archive-title">BepiColombo Mercury Orbit</span>
+                    <span class="archive-desc">ESA's BepiColombo mission enters Mercury's orbit to study its surface and magnetic field.</span>
+                </div>
             </div>
         </section>
 
@@ -205,7 +246,11 @@
                     <div class="crew-header">
                         <div class="crew-img-placeholder">TS</div>
                         <div class="crew-title-box">
-                            <h3>Tanveer S. Saini</h3>
+                            <h3>
+                                <a href="https://www.linkedin.com/in/tanveer-singh-saini-6555b2323/" target="_blank" class="crew-name-link">
+                                    Tanveer S. Saini
+                                </a>
+                            </h3>
                             <span class="crew-role">Embedded Engineer | Radio Astronomy</span>
                         </div>
                     </div>
@@ -223,7 +268,11 @@
                     <div class="crew-header">
                         <div class="crew-img-placeholder" style="border-color: #ff4757; color: #ff4757;">SM</div>
                         <div class="crew-title-box">
-                            <h3 style="color: #ff4757;">Sarthak Mehta</h3>
+                            <h3 style="color: #ff4757;">
+                                <a href="https://www.linkedin.com/in/sarthak-mehta-698457310/" target="_blank" class="crew-name-link" style="color: #ff4757;">
+                                    Sarthak Mehta
+                                </a>
+                            </h3>
                             <span class="crew-role">AI Researcher | Quantum Physics</span>
                         </div>
                     </div>
@@ -240,6 +289,21 @@
         </section>
 
     </main>
+
+    <div id="chat-widget" class="chat-widget">
+        <div id="chat-header" onclick="toggleChat()">
+            <i class="fa-solid fa-robot"></i> AETHER AI LINK
+        </div>
+        <div id="chat-body">
+            <div id="chat-output">
+                <p class="bot-msg">System Online. Awaiting inputs.</p>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Transmit command..." onkeypress="handleInput(event)">
+                <button onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
