@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AETHER | Space Command</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;600;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <canvas id="star-canvas"></canvas>
+    <div class="planet planet-hero"></div>
+    <div class="planet planet-distant"></div>
+
+    <button class="menu-btn" onclick="toggleSidebar()">
+        <i class="fa-solid fa-bars"></i>
+    </button>
+
+    <div id="sidebar" class="sidebar">
+        <button class="close-btn" onclick="toggleSidebar()">&times;</button>
+        <nav class="sidebar-nav">
+            <a href="#" onclick="toggleSidebar(); document.getElementById('launch-terminal').scrollIntoView({behavior: 'smooth'})">
+                <i class="fa-solid fa-shuttle-space"></i> Next Launch
+            </a>
+            <a href="#" onclick="toggleSidebar(); document.getElementById('news-feed').scrollIntoView({behavior: 'smooth'})">
+                <i class="fa-solid fa-satellite-dish"></i> Live Mission Feed
+            </a>
+            <a href="#" onclick="toggleSidebar(); document.getElementById('space-2025').scrollIntoView({behavior: 'smooth'})">
+                <i class="fa-solid fa-clock-rotate-left"></i> Space in 2025
+            </a>
+            <a href="#" onclick="toggleSidebar(); document.getElementById('crew-manifest').scrollIntoView({behavior: 'smooth'})">
+                <i class="fa-solid fa-user-astronaut"></i> Crew Manifest
+            </a>
+            <a href="https://www.isro.gov.in/" target="_blank">
+                <i class="fa-solid fa-rocket"></i> ISRO Official
+            </a>
+            <a href="https://www.nasa.gov/" target="_blank">
+                <i class="fa-brands fa-nasa"></i> NASA Official
+            </a>
+        </nav>
+    </div>
+
+    <main>
+        <div class="news-ticker-container">
+            <div class="ticker-label">LIVE FEED</div>
+            <div class="ticker-content">
+                <a href="https://www.google.com/search?q=ISRO+LVM3+launch+latest+news" target="_blank" class="ticker-item">🔴 <strong>DEC 26:</strong> ISRO LVM3-M6 successfully injects Bluebird Block-2 into orbit.</a>
+                <a href="https://www.google.com/search?q=Artemis+II+mission+update" target="_blank" class="ticker-item">⚠️ <strong>ARTEMIS UPDATE:</strong> NASA confirms Feb 2026 launch window for Artemis II crewed flyby.</a>
+                <a href="https://www.google.com/search?q=SpaceX+Starship+flight+7+news" target="_blank" class="ticker-item">🚀 <strong>STARSHIP:</strong> SpaceX moves Ship 33 to pad for final static fire tests ahead of Flight 7.</a>
+                <a href="https://www.google.com/search?q=Voyager+1+data+glitch+2025" target="_blank" class="ticker-item">📡 <strong>DEEP SPACE:</strong> Voyager 1 sends corrupted data packet; NASA JPL attempting remote reset.</a>
+                <a href="https://www.google.com/search?q=Sentinel-6+sea+level+data" target="_blank" class="ticker-item">🌍 <strong>CLIMATE:</strong> Copernicus Sentinel-6 captures unprecedented sea level rise data in Pacific.</a>
+            </div>
+        </div>
+
+        <section class="hero">
+            <div class="hero-content">
+                <div class="brand-badge">EST. 2025 // GROUND STATION</div>
+                <h1 class="brand-name">AETHER</h1>
+                <p class="hero-subtitle">MISSION CONTROL CENTER</p>
+                
+                <div class="telemetry-dashboard">
+                    <div class="telemetry-item">
+                        <span class="tele-label">MISSION TIME (UTC)</span>
+                        <span class="tele-value" id="utc-clock">--:--:--</span>
+                    </div>
+                    <div class="telemetry-item">
+                        <span class="tele-label">LOCAL TIME (IST)</span>
+                        <span class="tele-value" id="local-clock">--:--:--</span>
+                    </div>
+                    <div class="telemetry-item">
+                        <span class="tele-label">COORDINATES</span>
+                        <span class="tele-value" style="font-size: 1rem;">31.63° N, 74.87° E</span> </div>
+                    <div class="telemetry-item">
+                        <span class="tele-label">STATION STATUS</span>
+                        <span class="tele-value status-ok">ONLINE</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="launch-terminal" class="news-section">
+            <div class="section-header">
+                <span class="eyebrow">Flight Schedule</span>
+                <h2>Next Orbital Launch</h2>
+            </div>
+            
+            <div class="launch-card" id="launch-card">
+                <div class="launch-info">
+                    <span class="launch-provider" id="launch-provider">CONNECTING TO NETWORK...</span>
+                    <h3 class="launch-mission" id="launch-mission">SEARCHING</h3>
+                    <span class="launch-pad" id="launch-pad">--</span>
+                </div>
+                <div class="launch-timer">
+                    <div class="timer-box">
+                        <span id="d-days">--</span>
+                        <label>DAYS</label>
+                    </div>
+                    <div class="timer-colon">:</div>
+                    <div class="timer-box">
+                        <span id="d-hours">--</span>
+                        <label>HRS</label>
+                    </div>
+                    <div class="timer-colon">:</div>
+                    <div class="timer-box">
+                        <span id="d-mins">--</span>
+                        <label>MIN</label>
+                    </div>
+                    <div class="timer-colon">:</div>
+                    <div class="timer-box warning">
+                        <span id="d-secs">--</span>
+                        <label>SEC</label>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="space-2025" class="news-section">
+            <div class="section-header">
+                <span class="eyebrow">Mission Archive</span>
+                <h2>SPACE IN 2025</h2>
+            </div>
+
+            <div class="archive-grid">
+                <div class="archive-item">
+                    <div class="archive-header">
+                        <span class="date-badge">JAN 16</span>
+                        <i class="fa-solid fa-handshake archive-icon"></i>
+                    </div>
+                    <span class="archive-title">ISRO SpaDeX Docking Success</span>
+                    <span class="archive-desc">India becomes the 4th nation to master autonomous space docking with the success of the SDX-01 and SDX-02 mission.</span>
+                </div>
+                <div class="archive-item">
+                    <div class="archive-header">
+                        <span class="date-badge">JAN 29</span>
+                        <i class="fa-solid fa-rocket archive-icon"></i>
+                    </div>
+                    <span class="archive-title">ISRO's 100th Launch</span>
+                    <span class="archive-desc">Historic milestone at Sriharikota: GSLV-F15 successfully deploys the NVS-02 navigation satellite.</span>
+                </div>
+                <div class="archive-item">
+                    <div class="archive-header">
+                        <span class="date-badge warning">FEB 27</span>
+                        <i class="fa-solid fa-triangle-exclamation archive-icon warning"></i>
+                    </div>
+                    <span class="archive-title">AstroForge Brokkr-2 Anomaly</span>
+                    <span class="archive-desc">Commercial asteroid mining mission failed to return data during flyby due to critical communication loss.</span>
+                </div>
+                <div class="archive-item">
+                    <div class="archive-header">
+                        <span class="date-badge">MAR 11</span>
+                        <i class="fa-solid fa-magnifying-glass-location archive-icon"></i>
+                    </div>
+                    <span class="archive-title">Double Launch: SPHEREx & PUNCH</span>
+                    <span class="archive-desc">NASA launches two major science missions aboard a single Falcon 9 to study the universe's origins and the Sun's corona.</span>
+                </div>
+                <div class="archive-item">
+                    <div class="archive-header">
+                        <span class="date-badge">APR 01</span>
+                        <i class="fa-solid fa-earth-americas archive-icon"></i>
+                    </div>
+                    <span class="archive-title">SpaceX Fram2 Polar Mission</span>
+                    <span class="archive-desc">First human X-ray images captured in orbit by a civilian crew during a historic 3-day polar orbit mission.</span>
+                </div>
+                <div class="archive-item">
+                    <div class="archive-header">
+                        <span class="date-badge warning">MAY 10</span>
+                        <i class="fa-solid fa-fire-burner archive-icon warning"></i>
+                    </div>
+                    <span class="archive-title">Kosmos 482 Re-entry</span>
+                    <span class="archive-desc">53-year-old Soviet Venus probe crashes into the Indian Ocean, reigniting global debates on space debris management.</span>
+                </div>
+                <div class="archive-item">
+                    <div class="archive-header">
+                        <span class="date-badge">JUN 25</span>
+                        <i class="fa-solid fa-user-astronaut archive-icon"></i>
+                    </div>
+                    <span class="archive-title">Indian Astronaut on ISS</span>
+                    <span class="archive-desc">Group Captain Shubhanshu Shukla boards the ISS via Axiom-4, conducting vital experiments for the Gaganyaan program.</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="news-feed" class="news-section">
+            <div class="section-header">
+                <span class="eyebrow">Live Data Feed</span>
+                <h2>Global Mission Intelligence</h2>
+            </div>
+            <div class="news-grid" id="news-container">
+                <div class="loading-state">
+                    <p>Establishing Satellite Uplink...</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="crew-manifest" class="news-section">
+            <div class="section-header">
+                <span class="eyebrow">Personnel File</span>
+                <h2>Active Crew</h2>
+            </div>
+            
+            <div class="crew-grid">
+                <div class="crew-card">
+                    <div class="crew-header">
+                        <div class="crew-img-placeholder">TS</div>
+                        <div class="crew-title-box">
+                            <h3>Tanveer S. Saini</h3>
+                            <span class="crew-role">Embedded Engineer | Radio Astronomy</span>
+                        </div>
+                    </div>
+                    <p class="crew-bio">
+                        Electrical Engineering undergraduate at NIT Jalandhar. Leading the development of <strong>Radio Telescope</strong> infrastructure and <strong>ADCS</strong> (Attitude Determination and Control Systems) for CubeSats.
+                    </p>
+                    <div class="crew-stats">
+                        <div class="stat-box"><strong>Active Projects:</strong> Radio Telescope, CubeSat ADCS</div>
+                        <div class="stat-box"><strong>Tech Stack:</strong> Python, C++, ESP32, Deep Learning</div>
+                        <div class="stat-box"><strong>Status:</strong> ACTIVE</div>
+                    </div>
+                </div>
+
+                <div class="crew-card">
+                    <div class="crew-header">
+                        <div class="crew-img-placeholder" style="border-color: #ff4757; color: #ff4757;">SM</div>
+                        <div class="crew-title-box">
+                            <h3 style="color: #ff4757;">Sarthak Mehta</h3>
+                            <span class="crew-role">AI Researcher | Quantum Physics</span>
+                        </div>
+                    </div>
+                    <p class="crew-bio">
+                        CSE undergraduate at NIT Jalandhar specializing in <strong>Federated Learning</strong> and Human-Centred AI. Researcher in privacy-preserving embeddings and Quantum Physics enthusiast.
+                    </p>
+                    <div class="crew-stats">
+                        <div class="stat-box"><strong>Active Projects:</strong> Privacy-Preserving AI, VitalArchive</div>
+                        <div class="stat-box"><strong>Tech Stack:</strong> PyTorch, Hugging Face, React, C++</div>
+                        <div class="stat-box"><strong>Status:</strong> ACTIVE</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
