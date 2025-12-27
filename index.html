@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AETHER | Space Command</title>
+    
     <link rel="stylesheet" href="styles.css">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@400;600;900&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
 
@@ -24,6 +28,9 @@
             <a href="#" onclick="toggleSidebar(); document.getElementById('launch-terminal').scrollIntoView({behavior: 'smooth'})">
                 <i class="fa-solid fa-shuttle-space"></i> Next Launch
             </a>
+            <a href="#" onclick="toggleSidebar(); document.getElementById('iss-tracker').scrollIntoView({behavior: 'smooth'})">
+                <i class="fa-solid fa-globe"></i> ISS Radar
+            </a>
             <a href="#" onclick="toggleSidebar(); document.getElementById('news-feed').scrollIntoView({behavior: 'smooth'})">
                 <i class="fa-solid fa-satellite-dish"></i> Live Mission Feed
             </a>
@@ -33,6 +40,19 @@
             <a href="#" onclick="toggleSidebar(); document.getElementById('crew-manifest').scrollIntoView({behavior: 'smooth'})">
                 <i class="fa-solid fa-user-astronaut"></i> Crew Manifest
             </a>
+
+            <div class="sidebar-divider">EXPLORE DATA</div>
+
+            <a href="reuseable_launch_vehicle.pdf" target="_blank">
+                <i class="fa-solid fa-file-pdf"></i> RLV Technology
+            </a>
+            
+            <a href="James%20Webb%20Space%20Telescope.pdf" target="_blank">
+                <i class="fa-solid fa-file-pdf"></i> JWST Research
+            </a>
+
+            <div class="sidebar-divider">OFFICIAL LINKS</div>
+
             <a href="https://www.isro.gov.in/" target="_blank">
                 <i class="fa-solid fa-rocket"></i> ISRO Official
             </a>
@@ -113,6 +133,25 @@
                         <span id="d-secs">--</span>
                         <label>SEC</label>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="iss-tracker" class="news-section">
+            <div class="section-header">
+                <span class="eyebrow">Orbital Radar</span>
+                <h2>ISS LIVE TRACKING</h2>
+            </div>
+            
+            <div id="iss-map-container">
+                <div id="iss-map"></div>
+                <div class="radar-overlay"></div> 
+                
+                <div class="iss-telemetry-box">
+                    <div>ALTITUDE: <span id="iss-alt">--</span> km</div>
+                    <div>VELOCITY: <span id="iss-vel">--</span> km/h</div>
+                    <div>LAT: <span id="iss-lat">--</span></div>
+                    <div>LON: <span id="iss-lon">--</span></div>
                 </div>
             </div>
         </section>
@@ -328,6 +367,7 @@
         </div>
     </div>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

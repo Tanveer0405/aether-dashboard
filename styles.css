@@ -42,7 +42,7 @@ body {
     filter: blur(2px);
 }
 
-/* --- SIDEBAR UI --- */
+/* --- SIDEBAR UI (FIXED SCROLLING) --- */
 .menu-btn {
     position: fixed;
     top: 30px;
@@ -78,7 +78,17 @@ body {
     transition: left 0.4s ease-in-out;
     padding-top: 80px;
     box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+    
+    /* FIX: ENABLE SCROLLING */
+    overflow-y: auto; 
+    scrollbar-width: thin;
+    scrollbar-color: #4facfe rgba(10, 15, 30, 0.9);
 }
+
+/* Scrollbar Styling */
+.sidebar::-webkit-scrollbar { width: 6px; }
+.sidebar::-webkit-scrollbar-thumb { background-color: #4facfe; border-radius: 3px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
 
 .sidebar.active { left: 0; }
 
@@ -101,6 +111,7 @@ body {
     flex-direction: column;
     gap: 10px;
     padding: 20px;
+    padding-bottom: 50px; /* Extra space at bottom */
 }
 
 .sidebar-nav a {
@@ -124,6 +135,19 @@ body {
 }
 
 .sidebar-nav i { width: 20px; text-align: center; color: #4facfe; }
+
+/* --- SIDEBAR DIVIDERS --- */
+.sidebar-divider {
+    font-size: 0.75rem;
+    color: #64748b; 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 25px 0 10px 20px;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 5px;
+    width: 80%;
+}
 
 /* --- HERO SECTION --- */
 .hero {
@@ -613,3 +637,56 @@ body {
     font-weight: 600;
     max-width: 85%;
 }
+
+/* --- ISS RADAR MAP (Required for Map to Show) --- */
+#iss-map-container {
+    position: relative;
+    max-width: 1000px;
+    height: 500px; /* IMPORTANT: Without this, map is invisible */
+    margin: 0 auto;
+    border: 1px solid #4facfe;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(79, 172, 254, 0.2);
+}
+
+#iss-map {
+    height: 100%;
+    width: 100%;
+    background: #000;
+}
+
+/* SCI-FI MAP FILTER (Makes the map dark/green) */
+.leaflet-tile-pane {
+    filter: invert(100%) hue-rotate(180deg) brightness(0.8) contrast(1.5);
+}
+
+/* Radar Grid Overlay */
+.radar-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-image: 
+        linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: 400;
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+}
+
+/* Telemetry Overlay Box */
+.iss-telemetry-box {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid #4facfe;
+    padding: 15px;
+    font-family: 'Share Tech Mono', monospace;
+    color: #4facfe;
+    z-index: 500;
+    border-radius: 4px;
+    font-size: 1.1rem;
+}
+.iss-telemetry-box span { color: #fff; }

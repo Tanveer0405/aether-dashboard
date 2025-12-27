@@ -168,24 +168,19 @@ async function sendMessage() {
 
     if (!text) return;
 
-    // 1. Show User Message
     output.innerHTML += `<div class="user-msg">${text}</div>`;
     input.value = "";
     output.scrollTop = output.scrollHeight;
 
-    // 2. Show "Thinking..."
     const loadingId = "loading-" + Date.now();
     output.innerHTML += `<div class="bot-msg" id="${loadingId}">...Computing...</div>`;
     output.scrollTop = output.scrollHeight;
 
-    // 3. TRY CONNECTING TO BACKEND
     try {
-        // --- UPDATED LIVE URL ---
         const backendURL = 'https://aether-api-7kpl.onrender.com/chat'; 
         
-        // We set a slightly longer timeout for the free tier (it might sleep)
         const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000); // Increased to 10s for wake-up
+        const timeoutId = setTimeout(() => controller.abort(), 10000);
 
         const response = await fetch(backendURL, {
             method: 'POST',
@@ -199,7 +194,6 @@ async function sendMessage() {
         document.getElementById(loadingId).innerText = data.reply;
 
     } catch (error) {
-        // 4. FALLBACK: SIMULATION MODE (If connection fails or times out)
         console.log("Backend connection failed:", error);
         
         let reply = "⚠ Uplink Unstable. Switching to Local Simulation.";
@@ -215,6 +209,55 @@ async function sendMessage() {
     }
 }
 
+// --- ISS TRACKER (ORBITAL RADAR) - ADDED BACK ---
+async function initISSTracker() {
+    const mapContainer = document.getElementById('iss-map');
+    
+    if (!mapContainer) return; // Stop if map div is missing
+
+    // 1. Initialize Map
+    const map = L.map('iss-map').setView([0, 0], 3);
+    
+    // 2. Add Map Tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap',
+        maxZoom: 18
+    }).addTo(map);
+
+    // 3. Custom Icon
+    const issIcon = L.icon({
+        iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/International_Space_Station.svg',
+        iconSize: [50, 32],
+        iconAnchor: [25, 16]
+    });
+
+    const marker = L.marker([0, 0], {icon: issIcon}).addTo(map);
+
+    // 4. Fetch Data
+    async function updatePosition() {
+        try {
+            const response = await fetch('https://api.wheretheiss.at/v1/satellites/25544');
+            const data = await response.json();
+            
+            const { latitude, longitude, altitude, velocity } = data;
+
+            marker.setLatLng([latitude, longitude]);
+            map.panTo([latitude, longitude]);
+
+            document.getElementById('iss-alt').innerText = altitude.toFixed(2);
+            document.getElementById('iss-vel').innerText = velocity.toFixed(0);
+            document.getElementById('iss-lat').innerText = latitude.toFixed(2);
+            document.getElementById('iss-lon').innerText = longitude.toFixed(2);
+
+        } catch (error) {
+            console.log("ISS Signal Lost:", error);
+        }
+    }
+
+    setInterval(updatePosition, 3000);
+    updatePosition();
+}
+
 // INITIALIZATION
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
@@ -226,3 +269,4 @@ initStars();
 animateStars();
 loadNextLaunch();
 loadSpaceNews();
+initISSTracker(); // Start the map
